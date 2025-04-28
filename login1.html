@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farming Login Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #e6f4e6;
+      min-height: 100vh;
+      background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjzrC3PU0NzAQLqdnp4_K-lLxQedTvNjiR3A&s");
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    .glass {
+
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      z-index: 1;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center px-4 py-12 relative text-green-900">
+  <div class="glass max-w-md w-full p-8 rounded-2xl shadow-2xl">
+    <h2 class="text-3xl font-bold mb-6 text-center">Welcome Back to KRISHIVIKAS</h2>
+    <form id="loginForm" action="./homepage.html" method="GET">
+      <!-- Email or Phone -->
+      <div class="mb-4">
+        <label for="identifier" class="block text-sm mb-2">Email or Phone Number</label>
+        <input type="text" id="identifier" name="identifier"
+               placeholder="farmer@example.com or 9876543210"
+               class="w-full p-3 rounded-lg bg-white bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-green-400"
+               required />
+      </div>
+
+      <!-- Password -->
+      <div class="mb-6 hidden" id="passwordBox">
+        <label for="password" class="block text-sm mb-2">Password</label>
+        <input type="password" id="password" name="password" placeholder="••••••••"
+               class="w-full p-3 rounded-lg bg-white bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-green-400" />
+      </div>
+
+      <!-- OTP -->
+      <div class="mb-6 hidden" id="otpBox">
+        <label for="otp" class="block text-sm mb-2">OTP (4-digit)</label>
+        <input type="text" id="otp" name="otp" maxlength="4" placeholder="1234"
+               class="w-full p-3 rounded-lg bg-white bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-green-400" />
+      </div>
+
+      <!-- Log In Button -->
+      <button type="submit"
+              class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg transition duration-300">
+        Log In
+      </button>
+    </form>
+
+    <p class="text-sm text-center mt-6">
+      New to KRISHIVIKAS?
+      <a href="./registration.html" class="text-green-700 hover:underline">Create Account</a>
+    </p>
+  </div>
+
+  <script>
+    const identifier = document.getElementById('identifier');
+    const passwordBox = document.getElementById('passwordBox');
+    const password = document.getElementById('password');
+    const otpBox = document.getElementById('otpBox');
+    const otp = document.getElementById('otp');
+
+    identifier.addEventListener('input', function () {
+      const value = identifier.value.trim();
+      const isPhone = /^\d{10}$/.test(value);
+      const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+      if (isEmail) {
+        passwordBox.classList.remove('hidden');
+        password.required = true;
+
+        otpBox.classList.add('hidden');
+        otp.required = false;
+        otp.value = '';
+      } else if (isPhone) {
+        otpBox.classList.remove('hidden');
+        otp.required = true;
+
+        passwordBox.classList.add('hidden');
+        password.required = false;
+        password.value = '';
+      } else {
+        // Hide both if input is invalid
+        passwordBox.classList.add('hidden');
+        otpBox.classList.add('hidden');
+        password.required = false;
+        otp.required = false;
+      }
+    });
+  </script>
+</body>
+</html>

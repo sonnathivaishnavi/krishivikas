@@ -1,0 +1,226 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Precautions App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Patrick Hand', cursive;
+      background: linear-gradient(135deg, #e0f7fa, #a5d6a7, #c8e6c9);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      margin: 0;
+      padding: 0;
+    }
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding: 20px;
+      flex-direction: column;
+      align-items: center;
+      backdrop-filter: blur(10px);
+    }
+    .active {
+      display: flex;
+    }
+    .button {
+      background-color: #43a047;
+      color: white;
+      padding: 14px 28px;
+      font-size: 22px;
+      border: none;
+      cursor: pointer;
+      border-radius: 12px;
+      transition: background-color 0.3s ease;
+      margin-top: 100px;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+    .button:hover {
+      background-color: #388e3c;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 30px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      margin-top: 50px;
+      flex-wrap: wrap;
+      max-width: 95%;
+      width: 950px;
+    }
+    input[type="text"] {
+      padding: 18px 28px;
+      font-size: 20px;
+      border-radius: 40px;
+      border: 2px solid #4CAF50;
+      width: 450px;
+      height: 60px;
+      outline: none;
+      background-color: #f1f8e9;
+      transition: all 0.3s ease;
+    }
+    input[type="text"]:focus {
+      background-color: #ffffff;
+      border-color: #388e3c;
+    }
+    .mic-icon {
+      font-size: 28px;
+      color: #388e3c;
+      cursor: pointer;
+      background: #e0f2f1;
+      padding: 14px;
+      border-radius: 50%;
+    }
+    .enter-button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 16px 24px;
+      font-size: 18px;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .enter-button:hover {
+      background-color: #388e3c;
+    }
+    select {
+      padding: 14px 20px;
+      font-size: 18px;
+      border-radius: 25px;
+      border: 2px solid #4CAF50;
+      background-color: #f1f8e9;
+      color: #2e7d32;
+    }
+    .back-icon {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 28px;
+      color: #388e3c;
+      cursor: pointer;
+    }
+    #responseDisplay {
+      margin-top: 40px;
+      max-width: 1000px;
+      font-size: 24px;
+      color: #2e7d32;
+      font-family: 'Open Sans', sans-serif;
+      line-height: 1.8;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.95);
+      border-left: 8px solid #4CAF50;
+      border-radius: 20px;
+      white-space: pre-wrap;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+    #responseDisplay img {
+      max-width: 100%;
+      margin-top: 15px;
+      border-radius: 12px;
+    }
+    @media (max-width: 768px) {
+      input[type="text"] {
+        width: 300px;
+      }
+      .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      select {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+<div id="homePage" class="page active">
+  <button class="button" onclick="showPage('precautionsPage')">Precautions</button>
+</div>
+<div id="precautionsPage" class="page">
+  <i class="fas fa-arrow-left back-icon" onclick="showPage('homePage')" title="Go Back"></i>
+  <div class="top-bar">
+    <input id="questionInput" type="text" placeholder="Ask your farming question..." />
+    <button class="enter-button" onclick="handleQuestion()">Enter</button>
+    <i class="fas fa-microphone mic-icon" title="Voice Input" onclick="startListening()"></i>
+    <select id="languageSelect" onchange="updateLanguageUI()">
+      <option value="en">English</option>
+      <option value="te">తెలుగు</option>
+      <option value="hi">हिन्दी</option>
+      <option value="kn">ಕನ್ನಡ</option>
+      <option value="ta">தமிழ்</option>
+      <option value="ml">മലയാളം</option>
+      <option value="mr">मराठी</option>
+    </select>
+  </div>
+  <div id="responseDisplay">Ask a question above to get farming precautions and tips!</div>
+</div>
+<script>
+  const translations = {
+    heading: {
+      en: "Ask a question above to get farming precautions and tips!",
+      hi: "खेती से संबंधित सावधानियों और सुझावों के लिए ऊपर प्रश्न पूछें!",
+      te: "వ్యవసాయ సూచనల కోసం పై ప్రశ్నను అడగండి!",
+      kn: "ಕೃಷಿಯ ಮುನ್ನೆಚ್ಚರಿಕೆಗಳಿಗಾಗಿ ಮೇಲಿನ ಪ್ರಶ್ನೆ ಕೇಳಿ!",
+      ta: "விவசாய ஆலோசனைகள் பெற மேல் கேள்வி கேளுங்கள்!",
+      ml: "പരിസ്ഥിതി നിര്‍ദ്ദേശങ്ങള്‍ക്കായി മുകളിലെ ചോദ്യം ചോദിക്കൂ!",
+      mr: "शेतीसंबंधी सूचना मिळवण्यासाठी वर प्रश्न विचारा!"
+    },
+    detailedAnswer: {
+      en: "Answer for: \"{question}\"\n\n1. Overview:\n   This is an important topic in farming.\n\n2. Details:\n   - Conduct soil testing.\n   - Use proper fertilizers.\n   - Practice crop rotation.\n   - Manage irrigation efficiently.\n\n3. Expert Tip:\n   Stay updated with local farming advisories.\n\n4. Precaution:\n   Use certified seeds and monitor pest control regularly.\n\n(Answer provided in English.)",
+      hi: "प्रश्न के लिए उत्तर: \"{question}\"\n\n1. अवलोकन:\n   यह खेती का एक महत्वपूर्ण विषय है।\n\n2. विवरण:\n   - मिट्टी परीक्षण करें।\n   - उचित उर्वरकों का उपयोग करें।\n   - फसल चक्र अपनाएं।\n   - सिंचाई को ठीक से प्रबंधित करें।\n\n3. विशेषज्ञ सुझाव:\n   स्थानीय कृषि सलाहों के साथ अपडेट रहें।\n\n4. सावधानी:\n   प्रमाणित बीजों का उपयोग करें और कीट नियंत्रण पर ध्यान दें।\n\n(उत्तर हिंदी में प्रदान किया गया है।)",
+      te: "\"{question}\" అనే ప్రశ్నకి సమాధానం:\n\n1. అవలోకనం:\n   ఇది వ్యవసాయంలో ఒక ముఖ్యమైన అంశం.\n\n2. వివరాలు:\n   - మట్టి పరీక్ష చేయించుకోండి.\n   - సరైన ఎరువులు వాడండి.\n   - పంటల మార్పిడి పాటించండి.\n   - నీటి వినియోగాన్ని సమర్థవంతంగా నిర్వహించండి.\n\n3. నిపుణుల సూచన:\n   స్థానిక వ్యవసాయ సలహాలను అనుసరించండి.\n\n4. జాగ్రత్తలు:\n   ధృవీకరించిన విత్తనాలను ఉపయోగించండి మరియు పురుగుల నియంత్రణను పర్యవేక్షించండి.\n\n(ఈ సమాధానం తెలుగు భాషలో ఇవ్వబడింది.)",
+      kn: "\"{question}\" ಎಂಬ ಪ್ರಶ್ನೆಗೆ ಉತ್ತರ:\n\n1. ಅವಲೋಕನ:\n   ಇದು ಕೃಷಿಯಲ್ಲಿ ಒಂದು ಪ್ರಮುಖ ವಿಷಯ.\n\n2. ವಿವರಗಳು:\n   - ಮಣ್ಣಿನ ಪರೀಕ್ಷೆ ಮಾಡಿ.\n   - ಸರಿಯಾದ ಗೊಬ್ಬರ ಬಳಸಿ.\n   - ಬೆಳೆ ಪರಿವರ್ತನೆ ಅನುಸರಿಸಿ.\n   - ನೀರಿನ ನಿರ್ವಹಣೆ ಮಾಡಿರಿ.\n\n3. ಪರಿಣತಿ ಸಲಹೆ:\n   ಸ್ಥಳೀಯ ಕೃಷಿ ಸಲಹೆಗಳನ್ನು ಅನುಸರಿಸಿ.\n\n4. ಮುನ್ನೆಚ್ಚರಿಕೆ:\n   ಪ್ರಮಾಣಿತ ಬೀಜಗಳನ್ನು ಬಳಸಿ ಮತ್ತು ಕೀಟ ನಿಯಂತ್ರಣ ಮಾಡಿರಿ.\n\n(ಉತ್ತರ ಕನ್ನಡದಲ್ಲಿ ನೀಡಲಾಗಿದೆ.)",
+      ta: "\"{question}\" என்ற கேள்விக்கு பதில்:\n\n1. முன்னோட்டம்:\n   இது விவசாயத்தில் ஒரு முக்கியமான தலைப்பு.\n\n2. விவரங்கள்:\n   - மண் பரிசோதனை செய்யவும்.\n   - சரியான உரங்களை பயன்படுத்தவும்.\n   - பயிர் மாறுதல் நடைமுறைப்படுத்தவும்.\n   - நீர்ப்பாசனத்தை திறமையாக நிர்வகிக்கவும்.\n\n3. நிபுணர் அறிவுரை:\n   உள்ளூர் விவசாய அறிவுரைகளை பின்பற்றவும்.\n\n4. முன்னெச்சரிக்கை:\n   சான்று பெற்ற விதைகளை பயன்படுத்தவும் மற்றும் பூச்சி மேலாண்மை செய்யவும்.\n\n(இந்த பதில் தமிழில் வழங்கப்பட்டது.)",
+      ml: "\"{question}\" എന്ന ചോദ്യത്തിന് ഉത്തരം:\n\n1. അവലോകനം:\n   ഇത് കൃഷിയിലെ ഒരു പ്രധാന വിഷയം.\n\n2. വിശദാംശങ്ങൾ:\n   - മണ്ണിന്റെ പരിശോധന നടത്തുക.\n   - ശരിയായ വളങ്ങൾ ഉപയോഗിക്കുക.\n   - വിളകളുടെ പരിവർത്തനം പാലിക്കുക.\n   - ജലസേചനം കാര്യക്ഷമമായി നിയന്ത്രിക്കുക.\n\n3. വിദഗ്ധ ഉപദേശം:\n   പ്രാദേശിക കാർഷിക നിർദേശങ്ങൾ പാലിക്കുക.\n\n4. മുൻകരുതൽ:\n   സർട്ടിഫൈഡ് വിത്തുകൾ ഉപയോഗിക്കുകയും കീടനാശിനി നിയന്ത്രണത്തിൽ ശ്രദ്ധ നൽകുകയും ചെയ്യുക.\n\n(ഈ ഉത്തരമു മലയാളത്തിലാണ്.)",
+      mr: "\"{question}\" साठी उत्तर:\n\n1. विहंगावलोकन:\n   हे शेतीतील एक महत्त्वाचे विषय आहे.\n\n2. तपशील:\n   - जमिनीची तपासणी करा.\n   - योग्य खतांचा वापर करा.\n   - पीक परिवर्तन पद्धती अवलंबा.\n   - पाणी व्यवस्थापन प्रभावीपणे करा.\n\n3. तज्ञ सल्ला:\n   स्थानिक कृषी सल्लागारांच्या सूचना अनुसरण करा.\n\n4. खबरदारी:\n   प्रमाणित बियाण्यांचा वापर करा व कीटक नियंत्रणावर लक्ष ठेवा.\n\n(हे उत्तर मराठीत दिले आहे.)"
+    }
+  };
+
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+  }
+
+  function startListening() {
+    alert("Voice input feature coming soon!");
+  }
+
+  function updateLanguageUI() {
+    const lang = document.getElementById("languageSelect").value;
+    document.getElementById("responseDisplay").innerText = translations.heading[lang];
+    document.getElementById("questionInput").placeholder = translations.heading[lang];
+  }
+
+  function handleQuestion() {
+    const input = document.getElementById("questionInput").value.trim();
+    const lang = document.getElementById("languageSelect").value;
+    if (input === "") {
+      document.getElementById("responseDisplay").innerText = translations.heading[lang];
+      return;
+    }
+    document.getElementById("responseDisplay").innerText = "Thinking... Please wait a moment.";
+    setTimeout(() => {
+      const template = translations.detailedAnswer[lang] || translations.detailedAnswer["en"];
+      const answer = template.replace("{question}", input);
+      document.getElementById("responseDisplay").innerText = answer;
+    }, 1000);
+  }
+</script>
+</body>
+</html>
+

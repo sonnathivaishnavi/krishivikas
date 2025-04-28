@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Green Agriculture Site</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: center;
+      background-color: #388e3c;
+      padding: 15px;
+      font-size: 18px;
+    }
+
+    .navbar button {
+      background: none;
+      border: none;
+      color: white;
+      font-weight: bold;
+      margin: 0 15px;
+      font-size: 20px;
+      font-family: 'Trebuchet MS', sans-serif;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .navbar button:hover {
+      color: #c8e6c9;
+    }
+
+    .section {
+      display: none;
+      text-align: center;
+      padding: 50px;
+      font-size: 22px;
+    }
+
+    .active {
+      display: block;
+    }
+
+    textarea {
+      font-size: 18px;
+      width: 50%;
+      border: 2px solid #66bb6a;
+      border-radius: 5px;
+      padding: 10px;
+    }
+
+    button.voice-btn {
+      font-size: 18px;
+      padding: 10px 20px;
+      background-color: #66bb6a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    select {
+      font-size: 18px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      border: 1px solid #388e3c;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <button onclick="showSection('home')">Home</button>
+    <button onclick="showSection('organics')">Organics</button>
+    <button onclick="showSection('machines')">Machines</button>
+    <button onclick="showSection('pesticides')">Pesticides</button>
+    <button onclick="showSection('fertilizers')">Fertilizers</button>
+    <button onclick="showSection('solutions')">Solutions</button>
+    <button onclick="showSection('precautions')">Precautions</button>
+    <button onclick="showSection('contact')">Contact Us</button>
+    <button onclick="showSection('about')">About Us</button>
+  </nav>
+
+  <!-- Sections -->
+  <div id="home" class="section active">
+    <h1>Welcome to Green Agriculture</h1>
+    <p>Explore eco-friendly farming practices!</p>
+  </div>
+
+  <div id="organics" class="section">
+    <h1>Organic Farming</h1>
+    <p>Details about organic practices will be added here.</p>
+  </div>
+
+  <div id="machines" class="section">
+    <h1>Agricultural Machines</h1>
+    <p>Information about machines will go here.</p>
+  </div>
+
+  <div id="pesticides" class="section">
+    <h1>Pesticide Use</h1>
+    <p>Pesticide details will be listed here.</p>
+  </div>
+
+  <div id="fertilizers" class="section">
+    <h1>Fertilizers</h1>
+    <p>Content about fertilizers will be here.</p>
+  </div>
+
+  <div id="solutions" class="section">
+    <h1>Agricultural Solutions</h1>
+    <p>Helpful farming solutions will appear here.</p>
+  </div>
+
+  <div id="precautions" class="section">
+    <h1>Precautions</h1>
+    <textarea placeholder="Ask your question..." rows="5" cols="50"></textarea>
+    <br>
+    <button class="voice-btn">🎤 Speak</button>
+    <br><br>
+    <label for="language">Choose Language: </label>
+    <select id="language">
+      <option>English</option>
+      <option>Hindi</option>
+      <option>Spanish</option>
+      <option>French</option>
+    </select>
+  </div>
+
+  <div id="contact" class="section">
+    <h1>Contact Us</h1>
+    <p>Contact details or form will go here.</p>
+  </div>
+
+  <div id="about" class="section">
+    <h1>About Us</h1>
+    <p>More about our mission and team will be here.</p>
+  </div>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
+

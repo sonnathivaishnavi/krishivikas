@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🌱 Krishi Weather & Sowing Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f1f8e9;
+      padding: 30px;
+      color: #1b5e20;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 36px;
+      color: #2e7d32;
+      margin-bottom: 20px;
+    }
+
+    .info-box, .forecast-box, .prediction-box, .season-box {
+      border: 2px solid #a5d6a7;
+      border-radius: 14px;
+      padding: 25px;
+      margin: 25px auto;
+      background: #ffffff;
+      max-width: 600px;
+      box-shadow: 0 4px 12px rgba(0, 100, 0, 0.15);
+    }
+
+    .calendar-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #dcedc8;
+      border: 3px solid #81c784;
+      border-radius: 12px;
+      padding: 20px;
+      font-size: 22px;
+      color: #1b5e20;
+      font-weight: 600;
+    }
+
+    .calendar-date, .calendar-time {
+      width: 48%;
+    }
+
+    #weather, #prediction {
+      font-size: 20px;
+    }
+
+    select {
+      font-size: 20px;
+      padding: 12px;
+      width: 85%;
+      border-radius: 10px;
+      border: 2px solid #a5d6a7;
+      margin-top: 10px;
+    }
+
+    #seedList {
+      margin-top: 20px;
+      font-size: 18px;
+      text-align: left;
+    }
+
+    ul {
+      list-style: square;
+      padding-left: 25px;
+      margin-top: 10px;
+      color: #33691e;
+    }
+
+    li {
+      padding: 4px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌤️ Krishi Weather & Sowing Planner</h1>
+
+  <div class="info-box">
+    <strong>📅 Digital Calendar:</strong>
+    <div class="calendar-box">
+      <div class="calendar-date" id="calendarDate">Loading...</div>
+      <div class="calendar-time" id="calendarTime">--:--:--</div>
+    </div>
+  </div>
+
+  <div class="forecast-box">
+    <strong>🌦️ Current Weather:</strong><br>
+    <span id="weather">Loading...</span>
+  </div>
+
+  <div class="prediction-box">
+    <strong>🔮 Early Prediction:</strong>
+    <p id="prediction">Expect mild showers by late afternoon. Ideal conditions for sowing!</p>
+  </div>
+
+  <div class="season-box">
+    <strong>🗓️ Choose a Season to See Recommended Crops:</strong><br><br>
+    <select id="seasonSelect" onchange="updateSeeds()">
+      <option value="">-- Select Season --</option>
+      <option value="Summer">Summer</option>
+      <option value="Winter">Winter</option>
+      <option value="Monsoon">Monsoon</option>
+      <option value="Autumn">Autumn</option>
+    </select>
+    <div id="seedList"></div>
+  </div>
+
+  <script>
+    function updateDateTime() {
+      const now = new Date();
+      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      const months = ["January", "February", "March", "April", "May", "June", "July",
+                      "August", "September", "October", "November", "December"];
+
+      const dayName = days[now.getDay()];
+      const day = now.getDate();
+      const month = months[now.getMonth()];
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+
+      document.getElementById("calendarDate").textContent = `${dayName}, ${month} ${day}`;
+      document.getElementById("calendarTime").textContent = `${hours}:${minutes}:${seconds}`;
+    }
+
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+    const weathers = ["Sunny", "Cloudy", "Rainy", "Windy", "Stormy", "Clear Skies", "Humid"];
+    function updateWeather() {
+      const randomWeather = weathers[Math.floor(Math.random() * weathers.length)];
+      document.getElementById('weather').textContent = randomWeather;
+    }
+    setInterval(updateWeather, 5000);
+    updateWeather();
+
+    const seedsBySeason = {
+      Summer: [
+        "Maize", "Millet", "Groundnut", "Sunflower", "Sesame", "Sorghum",
+        "Cluster Beans", "Cowpea", "Bottle Gourd", "Ash Gourd", "Chilli"
+      ],
+      Winter: [
+        "Wheat", "Barley", "Mustard", "Green Peas", "Cauliflower", "Spinach",
+        "Garlic", "Carrot", "Radish", "Cabbage", "Fenugreek"
+      ],
+      Monsoon: [
+        "Paddy (Rice)", "Cotton", "Soybean", "Tur (Pigeon Pea)", "Black Gram",
+        "Green Gram", "Bajra", "Lady Finger", "Pumpkin", "Sponge Gourd"
+      ],
+      Autumn: [
+        "Garlic", "Coriander", "Spinach", "Turnip", "Beetroot", "Knol-Khol",
+        "Fenugreek", "Lettuce", "Celery", "Kale"
+      ]
+    };
+
+    function updateSeeds() {
+      const season = document.getElementById("seasonSelect").value;
+      const seedListDiv = document.getElementById("seedList");
+      if (season && seedsBySeason[season]) {
+        const seeds = seedsBySeason[season];
+        seedListDiv.innerHTML = `
+          <strong>🌿 Seeds suitable for ${season}:</strong>
+          <ul>${seeds.map(seed => `<li>${seed}</li>`).join('')}</ul>
+        `;
+      } else {
+        seedListDiv.innerHTML = '';
+      }
+    }
+  </script>
+
+</body>
+</html>
+

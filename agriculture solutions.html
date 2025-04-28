@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agriculture Solutions</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #f0fdf4;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  </style>
+</head>
+<body class="min-h-screen text-green-900">
+
+  <!-- Top Bar -->
+  <div class="glass p-4 flex flex-col md:flex-row gap-4 items-center justify-between shadow-md sticky top-0 z-50">
+    <!-- Language Selector -->
+    <select id="languageSelect" class="p-2 rounded-lg bg-white bg-opacity-80 focus:outline-none focus:ring-2 focus:ring-green-400">
+      <option value="english">🇬🇧 English</option>
+      <option value="hindi">🇮🇳 हिंदी (Hindi)</option>
+      <option value="telugu">🇮🇳 తెలుగు (Telugu)</option>
+      <option value="tamil">🇮🇳 தமிழ் (Tamil)</option>
+      <option value="kannada">🇮🇳 ಕನ್ನಡ (Kannada)</option>
+      <option value="marathi">🇮🇳 मराठी (Marathi)</option>
+    </select>
+
+    <!-- Search Input -->
+    <div class="flex w-full md:w-auto flex-grow items-center bg-white bg-opacity-70 rounded-lg overflow-hidden shadow-sm">
+      <input type="text" id="searchInput" placeholder="Ask your question..." class="flex-grow px-4 py-2 focus:outline-none" />
+      <button onclick="searchQuestion()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 transition duration-300">Search</button>
+    </div>
+
+    <!-- Voice Button -->
+    <button onclick="startVoiceRecognition()" class="flex items-center gap-2 text-green-800 hover:text-green-900 font-semibold mt-2 md:mt-0">
+      🎤 Voice
+    </button>
+  </div>
+
+  <!-- Page Content -->
+  <div class="p-6 max-w-3xl mx-auto text-center">
+    <h1 class="text-4xl font-bold mb-6">KRISHIVIKAS</h1>
+    <p class="text-lg mb-4">A seed is a whisper to the future, and the farmer is the one who listens</p>
+    <p id="voiceStatus" class="text-sm text-gray-600 mt-2"></p>
+
+    <!-- Answer Output -->
+    <div id="result" class="mt-6 text-md text-gray-800 border border-gray-300 rounded-lg bg-white bg-opacity-70 p-4 shadow-sm"></div>
+  </div>
+
+  <!-- Script Section -->
+  <script>
+    // Keyword mapping across languages
+    const keywordMap = {
+      rice: {
+        english: "rice",
+        telugu: "బియ్యం",
+        hindi: "धान",
+        kannada: "ಅಕ್ಕಿ",
+        tamil: "நெல்",
+        marathi: "भात"
+      },
+      fertilizer: {
+        english: "fertilizer",
+        telugu: "ఎరువు",
+        hindi: "उर्वरक",
+        kannada: "ರಸಗೊಬ್ಬರ",
+        tamil: "உரம்",
+        marathi: "खत"
+      }
+    };
+
+    // QA database
+    const qaAnswers = {
+      rice: {
+        english: "The best time to sow rice is from June to July.",
+        telugu: "బియ్యం విత్తడానికి ఉత్తమ కాలం జూన్ నుండి జూలై వరకు.",
+        hindi: "धान की बुआई का सबसे अच्छा समय जून से जुलाई तक है।",
+        kannada: "ಅಕ್ಕಿ ನೆಡುವ ಉತ್ತಮ ಕಾಲ ಜೂನ್-ಜುಲೈ ಆಗಿದೆ.",
+        tamil: "நெல் விதைப்பதற்கான சிறந்த பருவம் ஜூன் முதல் ஜூலை வரை.",
+        marathi: "भात पेरणीसाठी सर्वोत्तम काळ जून ते जुलै."
+      },
+      fertilizer: {
+        english: "Urea and DAP are best fertilizers for wheat.",
+        telugu: "గోధుమలకు యూరియా మరియు డీఏపీ ఉత్తమంగా ఉంటుంది.",
+        hindi: "गेहूं के लिए यूरिया और डीएपी अच्छे उर्वरक हैं।",
+        kannada: "ಗೋಧಿಗೆ ಯೂರಿಯಾ ಮತ್ತು ಡಿಎಪಿ ಉತ್ತಮ.",
+        tamil: "கோதுமைக்கு யூரியா மற்றும் டிஏபி சிறந்தவை.",
+        marathi: "गव्हासाठी युरिया आणि डीएಪಿ उत्तम आहेत."
+      }
+    };
+
+    // Search logic
+    function searchQuestion() {
+      const lang = document.getElementById("languageSelect").value;
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const resultDiv = document.getElementById("result");
+
+      let keyword = null;
+      for (let key in keywordMap) {
+        for (let l in keywordMap[key]) {
+          if (input.includes(keywordMap[key][l].toLowerCase())) {
+            keyword = key;
+            break;
+          }
+        }
+        if (keyword) break;
+      }
+
+      if (keyword && qaAnswers[keyword][lang]) {
+        resultDiv.innerHTML = `<strong>Answer:</strong> ${qaAnswers[keyword][lang]}`;
+      } else {
+        resultDiv.innerHTML = "❌ No matching answer found in selected language.";
+      }
+    }
+
+    // Placeholder for voice recognition
+    function startVoiceRecognition() {
+      document.getElementById("voiceStatus").innerText = "🎤 Voice recognition not yet implemented.";
+    }
+  </script>
+</body>
+</html>
+

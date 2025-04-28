@@ -1,0 +1,257 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>KRISHIVIKAS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-color: #e8f5e9;
+      color: #1b5e20;
+      padding: 40px;
+      text-align: center;
+      font-size: 18px;
+    }
+    h1 {
+      font-size: 36px;
+      color: #2e7d32;
+      text-align: center;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 20px;
+      background-color: #43a047;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin: 25px auto;
+      display: block;
+    }
+    button:hover {
+      background-color: #388e3c;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-top: 30px;
+    }
+    .machine-card {
+      background-color: #ffffff;
+      border: 2px solid #a5d6a7;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+    .machine-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .machine-card p {
+      margin-top: 12px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    select {
+      width: 80%;
+      padding: 14px;
+      margin: 10px 0;
+      font-size: 18px;
+      border: 2px solid #a5d6a7;
+      border-radius: 10px;
+      background-color: #ffffff;
+    }
+    .seller-card {
+      border: 2px solid #c8e6c9;
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 12px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 6px rgba(76, 175, 80, 0.2);
+      text-align: left;
+      max-width: 600px;
+    }
+    .hidden {
+      display: none;
+    }
+    .back-arrow {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #2e7d32;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌾 KRISHIVIKAS</h1>
+  <button id="exploreBtn" onclick="showMachineGallery()">Explore Machines</button>
+
+  <div id="gallerySection" class="hidden">
+    <div class="back-arrow" onclick="goBack()">&#8592;</div>
+    <h2>🚜 Agricultural Machines</h2>
+    <div class="grid-container" id="machineGrid"></div>
+  </div>
+
+  <div id="locationSection" class="hidden">
+    <div class="back-arrow" onclick="goBack()">&#8592;</div>
+    <h2>📍 Select Your Location</h2>
+    <p id="selectedMachineText"></p>
+
+    <select id="stateSelect">
+      <option value="">-- Select State --</option>
+    </select>
+
+    <select id="districtSelect">
+      <option value="">-- Select District --</option>
+    </select>
+
+    <select id="mandalSelect">
+      <option value="">-- Select Mandal --</option>
+    </select>
+
+    <select id="pincodeSelect">
+      <option value="">-- Select Pincode --</option>
+    </select>
+
+    <button onclick="goToSellersPage()">Next</button>
+  </div>
+
+  <script>
+    const machines = [
+      "Tractor", "Plough", "Seeder",
+      "Harvester", "Sprayer", "Rotavator",
+      "Baler", "Threshing Machine", "Power Tiller"
+    ];
+
+    const machineImages = {
+      "Tractor": "https://img.freepik.com/free-photo/truck-working-field-sunny-day_23-2151976964.jpg",
+      "Harvester": "https://img.freepik.com/free-photo/close-up-seeder-attached-tractor-field_146671-19082.jpg",
+      "Plough": "https://img.freepik.com/premium-photo/young-indian-farmer-plowing-field_75648-1082.jpg",
+      "Seeder": "https://img.freepik.com/free-photo/ploughing-heavy-tractor-cultivation-agriculture-works-field-with-plough_268835-915.jpg",
+      "Sprayer": "https://img.freepik.com/premium-photo/farmer-spraying-pesticide-rice-field-protection-seedling-from-insects_41350-862.jpg",
+      "Rotavator": "https://img.freepik.com/premium-photo/tractor-ploughing-agricultural-field_1048944-27269925.jpg",
+      "Baler": "https://img.freepik.com/free-photo/aerial-drone-view-harvester-gathering-crops_1268-20605.jpg",
+      "Threshing Machine": "https://img.freepik.com/premium-photo/tractor-with-trailed-bale-making-machine-collects-straw-rolls-field-makes-round-large_1196183-775.jpg",
+      "Power Tiller": "https://img.freepik.com/premium-photo/man-agricultural-vehicle-farm_1048944-7317014.jpg"
+    };
+
+    const indiaData = {
+      "Telangana": {
+        "Hyderabad": {
+          "Mandal1": ["500001", "500002"],
+          "Mandal2": ["500003"]
+        },
+        "Warangal": {
+          "Mandal1": ["506001"],
+          "Mandal2": ["506002"]
+        },
+        "Karimnagar": {
+          "Mandal1": ["505001"],
+          "Mandal2": ["505002"]
+        }
+      },
+      // you can add more states and districts similarly
+    };
+
+    function showMachineGallery() {
+      document.getElementById('exploreBtn').style.display = 'none';
+      document.getElementById('gallerySection').classList.remove('hidden');
+      populateMachineCards();
+    }
+
+    function populateMachineCards() {
+      const grid = document.getElementById('machineGrid');
+      grid.innerHTML = '';
+      machines.forEach(machine => {
+        const imgSrc = machineImages[machine] || `https://via.placeholder.com/300x180?text=${encodeURIComponent(machine)}`;
+        grid.innerHTML += `
+          <div class="machine-card" onclick="selectMachine('${machine}')">
+            <img src="${imgSrc}" alt="${machine}">
+            <p>${machine}</p>
+          </div>`;
+      });
+    }
+
+    function selectMachine(machine) {
+      document.getElementById('gallerySection').style.display = 'none';
+      document.getElementById('locationSection').classList.remove('hidden');
+      document.getElementById('selectedMachineText').textContent = `Selected Machine: ${machine}`;
+      window.selectedMachine = machine;
+      populateStates();
+    }
+
+    function populateStates() {
+      const stateSelect = document.getElementById('stateSelect');
+      stateSelect.innerHTML = '<option value="">-- Select State --</option>';
+      for (const state in indiaData) {
+        stateSelect.innerHTML += `<option value="${state}">${state}</option>`;
+      }
+    }
+
+    document.getElementById('stateSelect').addEventListener('change', function() {
+      const districts = indiaData[this.value];
+      const districtSelect = document.getElementById('districtSelect');
+      districtSelect.innerHTML = '<option value="">-- Select District --</option>';
+      for (const district in districts) {
+        districtSelect.innerHTML += `<option value="${district}">${district}</option>`;
+      }
+    });
+
+    document.getElementById('districtSelect').addEventListener('change', function() {
+      const state = document.getElementById('stateSelect').value;
+      const mandals = indiaData[state][this.value];
+      const mandalSelect = document.getElementById('mandalSelect');
+      mandalSelect.innerHTML = '<option value="">-- Select Mandal --</option>';
+      for (const mandal in mandals) {
+        mandalSelect.innerHTML += `<option value="${mandal}">${mandal}</option>`;
+      }
+    });
+
+    document.getElementById('mandalSelect').addEventListener('change', function() {
+      const state = document.getElementById('stateSelect').value;
+      const district = document.getElementById('districtSelect').value;
+      const pincodes = indiaData[state][district][this.value];
+      const pincodeSelect = document.getElementById('pincodeSelect');
+      pincodeSelect.innerHTML = '<option value="">-- Select Pincode --</option>';
+      pincodes.forEach(pin => {
+        pincodeSelect.innerHTML += `<option value="${pin}">${pin}</option>`;
+      });
+    });
+
+    function goToSellersPage() {
+      const pincode = document.getElementById('pincodeSelect').value;
+      if (!pincode) {
+        alert("Please complete all selections.");
+        return;
+      }
+      window.location.href = `?pincode=${encodeURIComponent(pincode)}`;
+    }
+
+    function displaySellersFromQuery() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('pincode')) {
+        document.getElementById('exploreBtn').style.display = 'none';
+        document.getElementById('gallerySection').style.display = 'none';
+        document.getElementById('locationSection').style.display = 'none';
+      }
+    }
+
+    function goBack() {
+      window.history.back();
+    }
+
+    window.onload = displaySellersFromQuery;
+  </script>
+</body>
+</html>
+

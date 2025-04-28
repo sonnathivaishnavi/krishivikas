@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agriculture Contact Directory</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e8f5e9;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #2e7d32;
+      margin-bottom: 20px;
+    }
+    select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #c8e6c9;
+      font-size: 16px;
+    }
+    .district-section {
+      display: none;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    h2 {
+      color: #1b5e20;
+      border-bottom: 2px solid #c8e6c9;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #dcedc8;
+    }
+    th {
+      background-color: #a5d6a7;
+      color: #1b5e20;
+    }
+    td a {
+      color: #33691e;
+      text-decoration: none;
+    }
+    td a:hover {
+      text-decoration: underline;
+    }
+
+    /* Tooltip styling */
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 200px;
+      background-color: #6c757d;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%; /* Position the tooltip above the text */
+      left: 50%;
+      margin-left: -100px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="title">Agriculture Contact Directory</h1>
+
+  <!-- Language Selector -->
+  <select id="languageSelect" onchange="changeLanguage()">
+    <option value="en">English</option>
+    <option value="te">తెలుగు (Telugu)</option>
+    <option value="hi">हिंदी (Hindi)</option>
+    <option value="ta">தமிழ் (Tamil)</option>
+  </select>
+
+  <!-- District Selector -->
+  <select id="districtSelect" onchange="showDistrict()">
+    <option value="">Select a District</option>
+    <option value="hyderabad">Hyderabad</option>
+    <option value="warangal">Warangal</option>
+    <option value="karimnagar">Karimnagar</option>
+  </select>
+
+  <!-- Hyderabad Section -->
+  <div id="hyderabad" class="district-section">
+    <h2 id="hyderabadTitle">Hyderabad (Telangana)</h2>
+    <table>
+      <thead>
+        <tr><th id="serviceTypeHeader">Service Type</th><th id="contactHeader">Contact</th></tr>
+      </thead>
+      <tbody>
+        <tr><td id="cropPlanning">Crop Planning Suggestor</td><td><a href="tel:+918074406623">8074406623</a></td></tr>
+        <tr><td id="algaeMachinery">Algae Machinery Supplier</td><td><a href="tel:+919998975678">9998975678</a></td></tr>
+        <tr><td id="aeo" class="tooltip">AEO
+          <span class="tooltiptext">Agriculture Extension Officer - Provides guidance and support to farmers for better agricultural practices and innovations.</span>
+        </td><td><a href="tel:+917288894694">7288894694</a></td></tr>
+        <tr><td id="fertilizerDistributor">Agriculture Fertilizer Distributor</td><td><a href="tel:+918197491952">8197491952</a></td></tr>
+        <tr><td id="organicFertilizerDistributor">Organic Fertilizer Distributor</td><td><a href="tel:+919999168770">9999168770</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Warangal Section -->
+  <div id="warangal" class="district-section">
+    <h2 id="warangalTitle">Warangal (Telangana)</h2>
+    <table>
+      <thead>
+        <tr><th>Service Type</th><th>Contact</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Crop Planning Suggestor</td><td><a href="tel:+919633837151">9633837151</a></td></tr>
+        <tr><td>Algae Machinery Supplier</td><td><a href="tel:+919959333261">9959333261</a></td></tr>
+        <tr><td>AEO</td><td><a href="tel:+917288894797">7288894797</a></td></tr>
+        <tr><td>Agriculture Fertilizer Distributor</td><td><a href="tel:+91984800336">984800336</a></td></tr>
+        <tr><td>Organic Fertilizer Distributor</td><td><a href="tel:+917288894887">7288894887</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Karimnagar Section -->
+  <div id="karimnagar" class="district-section">
+    <h2 id="karimnagarTitle">Karimnagar (Telangana)</h2>
+    <table>
+      <thead>
+        <tr><th>Service Type</th><th>Contact</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Crop Planning Suggestor</td><td><a href="tel:+917093750333">7093750333</a></td></tr>
+        <tr><td>Algae Machinery Supplier</td><td><a href="tel:+918096662993">8096662993</a></td></tr>
+        <tr><td>AEO</td><td><a href="tel:+917288894111">7288894111</a></td></tr>
+        <tr><td>Agriculture Fertilizer Distributor</td><td><a href="tel:+918951921857">8951921857</a></td></tr>
+        <tr><td>Organic Fertilizer Distributor</td><td><a href="tel:+918550999760">8550999760</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        title: "Agriculture Contact Directory",
+        serviceType: "Service Type",
+        contact: "Contact",
+        selectDistrict: "Select a District",
+        districts: { hyderabad: "Hyderabad", warangal: "Warangal", karimnagar: "Karimnagar" }
+      },
+      te: {
+        title: "వ్యవసాయ సంప్రదింపు డైరెక్టరీ",
+        serviceType: "సేవ రకం",
+        contact: "సంప్రదించండి",
+        selectDistrict: "జిల్లాను ఎంచుకోండి",
+        districts: { hyderabad: "హైదరాబాద్", warangal: "వరంగల్", karimnagar: "కరీంనగర్" }
+      },
+      hi: {
+        title: "कृषि संपर्क निर्देशिका",
+        serviceType: "सेवा प्रकार",
+        contact: "संपर्क करें",
+        selectDistrict: "जिला चुनें",
+        districts: { hyderabad: "हैदराबाद", warangal: "वारंगल", karimnagar: "करीमनगर" }
+      },
+      ta: {
+        title: "விவசாய தொடர்பு அடைவு",
+        serviceType: "சேவை வகை",
+        contact: "தொடர்பு கொள்ளுங்கள்",
+        selectDistrict: "மாவட்டத்தை தேர்வு செய்யவும்",
+        districts: { hyderabad: "ஹைதராபாத்", warangal: "வாரங்கல்", karimnagar: "கரீம்நகர்" }
+      }
+    };
+
+    function changeLanguage() {
+      const lang = document.getElementById('languageSelect').value;
+      const langData = translations[lang];
+
+      document.getElementById('title').innerText = langData.title;
+      document.getElementById('districtSelect').options[0].text = langData.selectDistrict;
+      document.getElementById('districtSelect').options[1].text = langData.districts.hyderabad;
+      document.getElementById('districtSelect').options[2].text = langData.districts.warangal;
+      document.getElementById('districtSelect').options[3].text = langData.districts.karimnagar;
+      
+      document.getElementById('hyderabadTitle').innerText = langData.districts.hyderabad + " (Telangana)";
+      document.getElementById('warangalTitle').innerText = langData.districts.warangal + " (Telangana)";
+      document.getElementById('karimnagarTitle').innerText = langData.districts.karimnagar + " (Telangana)";
+    }
+
+    function showDistrict() {
+      const districts = document.querySelectorAll('.district-section');
+      const selected = document.getElementById('districtSelect').value;
+
+      districts.forEach(dist => {
+        dist.style.display = 'none';
+      });
+
+      if (selected) {
+        document.getElementById(selected).style.display = 'block';
+      }
+    }
+  </script>
+
+</body>
+</html>

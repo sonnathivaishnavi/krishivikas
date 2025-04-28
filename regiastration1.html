@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farming Login Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #e6f4e6; /* Soft light green */
+      min-height: 100vh;
+      position: relative;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      z-index: 1;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center px-4 py-12 relative text-green-900">
+  <div class="glass max-w-md w-full p-8 rounded-2xl shadow-2xl">
+    <h2 class="text-3xl font-bold mb-6 text-center">Welcome Back to KRISHIVIKAS</h2>
+    <form>
+      <div class="mb-4">
+        <label for="email" class="block text-sm mb-2">Email</label>
+        <input type="email" id="email" placeholder="farmer@example.com"
+               class="w-full p-3 rounded-lg bg-white bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-green-400" required />
+      </div>
+      <div class="mb-6">
+        <label for="password" class="block text-sm mb-2">Password</label>
+        <input type="password" id="password" placeholder="••••••••"
+               class="w-full p-3 rounded-lg bg-white bg-opacity-60 focus:outline-none focus:ring-2 focus:ring-green-400" required />
+      </div>
+      <button type="submit"
+              class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg transition duration-300">
+        <a href="./homepage.html" class="text-green-700 hover:underline">Log In</a>
+
+      </button>
+    </form>
+    <p class="text-sm text-center mt-6">
+      New to KRISHIVIKAS?
+      <a href="./registration.html" class="text-green-700 hover:underline">Create Account</a>
+    </p>
+  </div>
+</body>
+</html>
